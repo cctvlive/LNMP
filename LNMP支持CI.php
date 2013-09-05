@@ -85,5 +85,31 @@ echo <<<CCTV"
 
         # PHP only, required if PHP was built with --enable-force-cgi-redirect
         #fastcgi_param  REDIRECT_STATUS    200;"
+        
+        my.wed
+        ................................................
+        
+        server
+{
+listen       80;
+server_name  www.touchopenid.com;
+index index.html index.htm index.php;
+root  /data0/htdocs/openid;
+
+location ~ \.php($|/) {
+set  $script     $uri;
+set  $path_info  "";
+if ($uri ~ "^(.+\.php)(/.+)") {
+set  $script     $1;
+set  $path_info  $2;
+}
+fastcgi_pass   127.0.0.1:9000;
+include        fastcgi_params;
+fastcgi_param  PATH_INFO                $path_info;
+fastcgi_param  SCRIPT_FILENAME          $document_root$script;
+fastcgi_param  SCRIPT_NAME              $script;
+}
+.................................................................................
+
 CCTV;
 ?>
