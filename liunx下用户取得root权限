@@ -1,4 +1,3 @@
-
 #liunx下用户取得root权限
 1、添加用户，首先用adduser命令添加一个普通用户，命令如下： #adduser tommy //添加一个名为tommy的用户
 #passwd tommy //修改密码
