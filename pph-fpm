@@ -1,0 +1,15 @@
+本篇以centos系统为例。
+PHP的一般默认安装目录是：
+find / -name php-fpm
+/usr/local/php/ 
+我们用php-fpm来进行重新加载配置文件（如php.ini）：
+/usr/local/php/sbin/php-fpm reload
+注：/usr/local/php/sbin/php-fpm还有其他参数，包括：start|stop|quit|restart|reload|logrotate。
+使用PHP-FPM来控制PHP-CGI的FastCGI进程
+　　/usr/local/php/sbin/php-fpm {start|stop|quit|restart|reload|logrotate}
+　　--start 启动php的fastcgi进程
+　　--stop 强制终止php的fastcgi进程
+　　--quit 平滑终止php的fastcgi进程
+　　--restart 重启php的fastcgi进程
+　　--reload 重新平滑加载php的php.ini
+　　--logrotate 重新启用log文件
