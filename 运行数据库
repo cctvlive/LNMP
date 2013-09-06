@@ -1,8 +1,11 @@
 
-
 授权不要自己去改表，那样不好，应该使用GRANT命令:
 
 GRANT 权限 ON 库名.表名 TO 用户名@主机名 IDENTIFIED BY "密码"
+
+mysql> grant select,update on db.*  to user@'%' identified by 'user';
+
+为数据库db创建一个只有修改权限密码为user的user用户;
 
 权限有这些：
 ALTER 修改表和索引 / 
