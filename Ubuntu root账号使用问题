@@ -1,0 +1,38 @@
+Ubuntu 中的 root 帐号默认是被禁用的，对于其他Linux系统来说，一般在安装过程就设定root密码，这样用户就能用它登录root帐户或使用su命令转换到超级用户身份。与之相反，Ubuntu默认安装时，并没有给root用户设置口令，也没有启用root帐户。我们可以使用sudo命令达此目的。 
+    sudo 是linux下常用的允许普通用户使用超级用户权限的工具，该命令为管理员提供了一种细颗粒度的访问控制方法，通过它人们既可以作为超级用户又可以作为其它类型的用户来访问系统。这样做的好处是，管理员能够在不告诉用户root密码的前提下，授予他们某些特定类型的超级用户权限，这正是许多系统管理员所梦寐以求的。
+ 
+  方法一：
+
+    那么现在教你如何开启root账户，首先设置一个root密码： 
+
+$ sudo passwd root 
+
+  提示要输入root用户密码，连续输入root密码，再使用：$ su 
+
+  就可以切换成超级管理员用户登陆了！ 
+
+  点击 System -> Preferences -> Login Window 菜单，并切换到 Security 选项页，然后选中其下的“Allow local system administrator login”选项。 
+
+  注销当前账号，你便可以使用 root 帐号登录 Ubuntu 系统。
+
+  如果要再次禁用 root 帐号，那么可以执行 sudo passwd -l root。 
+
+  方法二： 
+
+  在Ubuntu中用root帐号登录 
+
+  其实我个人认为这没有多大必要，因为当你需要 root 的权限时，使用 sudo 便可以了。如果你实在需要在 Ubuntu 中启用 root 帐号的话，那么不妨执行下面的操作： 
+
+  1.重新设置 root 的密码： 
+
+  $sudo passwd root #按照提示输入两次新的密码，并加以确认。 
+
+  2.启用root用户登录： 
+
+  $sudo vi /etc/gdm/gdm.conf # 
+
+  打开gnome的配置文件,在末行模式中输入：AllowRoot回车，找到AllowRoot＝false ,把false改为true，保存退出。 
+
+  重启系统，root 登录即可。若要禁用 root 帐号，则执行下列命令： 
+
+  $sudo passwd -l root 
