@@ -1,0 +1,10 @@
+mysql -uroot -p
+
+mysql> CREATE DATABASE; 创建数据库
+
+
+mysql>show database; 查询数据库
+
+mysql>use 'database'; 选择数据库进行操作
+
+mysql>
