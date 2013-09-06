@@ -1,0 +1,16 @@
+mysql -uroot -p ; 进入mysql
+
+mysql>show database; 查询数据库
+
+mysql> CREATE DATABASE abc; 创建数据库abc
+
+
+mysql>use database; 选择数据库进行操作
+
+mysql> source  /home/www/abc.sql; 向数据库abc导入sql数据文件
+
+
+mysql>select * from admin; 查询admin表,验证导入情况!验证通过进行数据库4步操作;
+
+
+mysql> drop database abc; 删除数据库abc
