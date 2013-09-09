@@ -8,3 +8,20 @@ mysql>show database; 查询数据库
 mysql>use 'database'; 选择数据库进行操作
 
 mysql>
+
+删除数据库
+删除数据库的操作可以使用DROP DATABASE语句，其语句的格式如下：
+drop database db_name ;
+对于删除数据库的操作，应该谨慎使用，一旦执行这项操作，数据库的所有结构和数据都会被删除，没有恢复的可能，除非数据库有备份。
+示例：
+通过drop database语句删除名称为shili的数据库，代码如下：
+mysql> drop database shili ;
+Query OK, 0 rows affected (0.00 sec)
+mysql> show databases ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
++--------------------+
+2 rows in set (0.00 sec)
