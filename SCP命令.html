@@ -1,0 +1,75 @@
+如何用scp传输文件
+scp – 安全复制 （远程文件复制工具）
+命令基本格式： 
+       scp [options] file_source file_target 
+Options:       
+usage: scp [-1246BCpqrv] [-c cipher] [-F ssh_config] [-i identity_file]
+           [-l limit] [-o ssh_option] [-P port] [-S program]
+           [[user@]host1:]file1 [...] [[user@]host2:]file2
+说明
+Scp在主机间复制文件。他使用 ssh(1)作为数据传输。而且用同样认证和安全性。 scp将在认证中请求输入密码所有的文件可能需要服务器和用户的特别描述来指明文件将被复制到/从某台服务器。两个远程登录的服务器间的文件复制是允许的。
+选项如下：
+-1 强制scp 用协议1
+-2 强制scp 用协议2
+-4 强制scp用IPV4的网址
+-6 强制scp用IPV6的网址
+-B 选择批处理模式（防止输入密码）
+-C 允许压缩。 标注-C到ssh(1)来允许压缩
+-c cipher
+       选择cipher来加密数据传输。这个选项直接传递到ssh(1)
+-F ssh_config
+       设定一个可变动的用户配置给ssh.这个选项直接会被传递到ssh(1)
+-i identity_file
+       选择被RSA认证读取私有密码的文件。这个选项可以直接被传递到ssh(1)
+-l limit
+       限制传输带宽，也就是速度 用Kbit/s的速度
+-o ssh_option
+       可以把ssh_config中的配置格式传到ssh中。这种模式对于说明没有独立的scp文件中断符的scp很有帮助。关于选项的如下。而他们的值请参看ssh_config(5)
+-P port
+      指定连接远程连接端口。注意这个选项需要写成大写的模式。因为-p已经早保留了次数和模式
+-S program      
+      指定一个加密程序。这个程序必须可读所有ssh(1)的选项。
+-p 指定修改次数，连接次数，还有对于原文件的模式
+-q 把进度参数关掉
+-r 递归的复制整个文件夹
+-S program      
+      指定一个加密程序。这个程序必须可读所有ssh(1)的选项。
+-V 冗余模式。 让 scp 和 ssh(1) 打印他们的排错信息， 这个在排错连接，认证，和配置中非常有用。
+诊断
+       scp 返回0 成功时，不成功时返回值大于0
+Example:
+1. local -> remote
+* 复制文件： 
+        * 命令格式： 
+                scp local_file remote_username@remote_ip:remote_folder 
+                或者 
+                scp local_file remote_username@remote_ip:remote_file 
+                或者 
+                scp local_file remote_ip:remote_folder 
+                或者 
+                scp local_file remote_ip:remote_file
+                第1,2个指定了用户名，命令执行后需要再输入密码，第1个仅指定了远程的目录，文件名字不变，第2个指定了文件名； 
+                第3,4个没有指定用户名，命令执行后需要输入用户名和密码，第3个仅指定了远程的目录，文件名字不变，第4个指定了文件名； 
+        * 例子： 
+                scp /home/space/music/1.mp3 root@yoursite.com:/home/root/others/music 
+                scp /home/space/music/1.mp3 root@yoursite.com:/home/root/others/music/001.mp3 
+                scp /home/space/music/1.mp3 yoursite.com:/home/root/others/music 
+                scp /home/space/music/1.mp3 yoursite.com:/home/root/others/music/001.mp3
+* 复制目录： 
+        * 命令格式： 
+                scp -r local_folder remote_username@remote_ip:remote_folder 
+                或者 
+                scp -r local_folder remote_ip:remote_folder
+                第1个指定了用户名，命令执行后需要再输入密码； 
+                第2个没有指定用户名，命令执行后需要输入用户名和密码； 
+        * 例子： 
+                scp -r /home/space/music/ root@yoursite.com:/home/root/others/ 
+                scp -r /home/space/music/ yoursite.com:/home/root/others/
+                上面 命令 将 本地 music 目录 复制 到 远程 others 目录下，即复制后有 远程 有 ../others/music/ 目录 
+2.remote -> local
+
+从 远程 复制到 本地，只要将 从 本地 复制到 远程 的命令 的 后2个参数 调换顺序 即可； 
+例如： 
+        scp root@yoursite.com:/home/root/others/music /home/space/music/1.mp3 
+        scp -r yoursite.com:/home/root/others/ /home/space/music/
+
