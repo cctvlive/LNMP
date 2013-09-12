@@ -1,0 +1,814 @@
+通过使用SSH，你可以把所有传输的数据进行加密，这样“中间人”这种攻击方式就不可能实现了， 而且也能够防止DNS和IP欺骗。还有一个额外的好处就是传输的数据是经过压缩的，所以可以加快传输的速度。 SSH有很多功能，它既可以代替telnet，又可以为ftp、pop、甚至ppp提供一个安全的“通道”。
+
+下面是Linux SSH 命令大全：
+
+rm -rf mydir /* 删除mydir目录 */
+cd mydir /* 进入mydir目录 */
+cd - /* 回上一级目录 */
+cd ~ /* 回根目录 */
+mv tools tool /* 把tools目录改名为tool */
+ln -s tool bac
+
+/* 给tool目录创建名为bac的符号链接,最熟悉的应该就是FTP中www链接到public_html目录了 */
+
+cp -a tool /home/leavex/www /* 把tool目录下所有文件复制到www目录下 */
+rm go.tar /* 删除go.tar文件 */
+find mt.cgi /* 查找文件名为mt.cgi的文件 */
+df –h /* 查看磁盘剩余空间,好像没这个必要，除非你太那个了 */
+tar xvf wordpress.tar /* 解压tar格式的文件 */
+tar -tvf myfile.tar /* 查看tar文件中包含的文件 */
+gzip -d ge.tar.gz /* 解压.tar.gz文件为.tar文件 */
+unzip phpbb.zip /* 解压zip文件，windows下要压缩出一个.tar.gz格式的文件还是有点麻烦的 */
+tar cf toole.tar tool /* 把tool目录打包为toole.tar文件 */
+tar cfz geek.tar.gz tool
+/* 把tool目录打包且压缩为geek.tar.gz文件，因为.tar文件几乎是没有压缩过的，MT的.tar.gz文件解压成.tar文件后差不多是10MB */
+
+wget http://www.sevenapart.com/download/wp.tar.gz
+/*下载远程服务器上的文件到自己的服务器，连上传都省了，服务器不是100M就是1000M的带宽，下载一个2-3兆的MT还不是几十秒的事 */
+wget -c http://www.eightapart.com/undone.zip
+/* 继续下载上次未下载完的文件 */
+
+tar cfz geek.tar.gz tool
+/* 把tool目录打包且压缩为geek.tar.gz文件，因为.tar文件几乎是没有压缩过的，MT的.tar.gz文件解压成.tar文件后差不多是10MB */
+
+还有一些是VIM里要用到的，也罗列出来吧！
+
+移动类的：
+h/j/k/l: 左/下/上/右　移一格
+w : 向后词移动　（前面加数字移动多少个词）
+b : 向前词移动　（前面加数字移动多少个词）
+e : 向后移到词末
+ge : 向前移到词末
+$ : 行末
+0 : 行首
+tx : 向右查找本行的x并移到那儿（大写时向左）
+33G : 移到文件的第33行
+gg : 文件首行
+G : 文件尾行
+33% : 文件的33%处
+H/M/L : 屏幕的首/中/尾行
+zt/zz/zb : 当前行移到屏幕的首/中/底部
+
+跳转：
+” : 回到跳转来的地方
+CTRL-O : 跳到一个 “较老” 的地方
+CTRL-I : 则跳到一个 “较新” 的地方
+
+查找：
+/ : 向下查找（后加关键字）
+? : 向上查找（后加关键字）
+n : 下一条符合的记录
+
+编辑：
+i : 转换到插入模式
+x : 删除当前字符
+. : 重复最后一次的修改操作(同PS里ctrl+f执行滤镜)
+u : 撤销操作
+CTRL-R : 重做
+p : 将删除的字符插入到当前位置(put)
+
+退出保存：
+:q : 退出
+:q! : 不保存退出
+ZZ : 保存后退出
+:e! : 放弃修改重新编辑
+
+退出SSH后，继续运行！
+#nohup wget http://www.phpv.net/file.tar.gz &
+
+wget是一个Linux环境下用于从World Wide Web上提取文件的工具，这是一个GPL许
+可证
+下的自由软件，其作者为Hrvoje Niksic 。wget支持HTTP和
+FTP协议
+，支持代理服务器和断点续传功能，能够自动递归远程主机的目录，找到合乎条件
+的文
+件并将其下载到本地硬盘上；如果必要，wget将恰当地转换页面中的超级连接以在
+本地
+生成可浏览的镜像。由于没有交互式界面，wget可在后台运行，截获并忽略
+HANGUP信号
+，因此在用户推出登录以后，仍可继续运行。通常，wget用于成批量地下载
+Internet网
+站上的文件，或制作远程网站的镜像。
+
+语法:
+
+wget [options] [URL-list]
+URL地址格式说明:可以使用如下格式的URL:
+http://host[:port]/path
+例如:
+http://fly.cc.fer.hr/
+ftp://ftp.xemacs.org/pub/xemacs/xemacs-19.14.tar.gz
+ftp://username:password@host/dir/file
+在最后一种形式中，以URL编码形式为FTP主机提供了用户名和密码（当然，也可以
+使用
+参数提供该信息，见后）。
+
+参数说明：
+
+wget的参数较多，但大部分应用只需要如下几个常用的参数：
+-r 递归；对于HTTP主机，wget首先下载URL指定的文件，然后（如果该文
+件是
+一个HTML文档的话）递归下载该文件所引用（超级连接）的所有文件（递归深度由
+参数
+-l指定）。对FTP主机，该参数意味着要下载URL指定的目录中的所有文件，递归方
+法与
+HTTP主机类似。
+
+-N 时间戳：该参数指定wget只下载更新的文件，也就是说，与本地目录中
+的对
+应文件的长度和最后修改日期一样的文件将不被下载。
+
+-m 镜像：相当于同时使用-r和-N参数。
+
+-l 设置递归级数；默认为5。-l1相当于不递归；-l0为无穷递归；注意，
+当递
+归深度增加时，文件数量将呈指数级增长。
+
+-t 设置重试次数。当连接中断（或超时）时，wget将试图重新连接。如
+果指
+定-t0，则重试次数设为无穷多。
+
+-c 指定断点续传功能。实际上，wget默认具有断点续传功能，只有当你使
+用别
+的ftp工具下载了某一文件的一部分，并希望wget接着完成此工作的时候，才需要
+指定
+此参数。
+
+使用举例：
+wget -m -l4 -t0 http://oneweb.com.cn/
+将在本地硬盘建立http://oneweb.com.cn/的镜像，镜像文件存入当前目录下一个
+名为
+oneweb.com.cn的子目录中（你也可以使用-nH参数指定不建立该子目录，而直接在
+当前
+目录下建立镜像的目录结构），递归深度为4，重试次数为无穷（若连接出现问题
+，
+wget将坚韧不拔地永远重试下去，知道任务完成！）
+
+另外一些使用频率稍低的参数如下：
+-A acclist / -R rejlist：
+这两个参数用于指定wget接受或排除的文件扩展名，多个名称之间用逗号隔开。例
+如，
+假设我们不想下载MPEG视频影像文件和.AU声音文件，可使用如下参数：
+-R mpg,mpeg,au
+
+其它参数还有：
+-L 只扩展相对连接，该参数对于抓取指定站点很有用，可以避免向宿主
+主机
+的其他目录扩散。例如，某个人网站地址为：http://www.xys.org/~ppfl/，使用
+如下
+命令行：
+wget -L http://www.xys.org/~ppfl/
+则只提取该个人网站，而不涉及主机www.xys.org上的其他目录。
+
+-k 转换连接：HTML文件存盘时，将其中的非相对连接转换成为相对连接。
+
+-X 在下载FTP主机上的文件时，排除若干指定的目录
+
+另外，下面参数用于设置wget的工作界面：
+-v 设置wget输出详细的工作信息。
+-q 设置wget不输出任何信息。
+
+如果我们已经在一个HTML文档（或普通文本文档）中存储了所要提取的文件的连接
+，可
+以让wget直接从该文件中提取信息，而不用在命令行中提供URL地址，参数格式为
+：
+-i filename
+地址文件也可以不是HTML文档，例如，一个普通的文本文件，其中有需要下载的
+URL列
+表即可。
+我们可以用以下技巧提高下载速度：由于Linux是一个多任务系统，我们可以同时
+运行
+多个wget进程以提高下载速度，例如，先下载某主页文件（index.html），然后将
+该文
+件所列出的所有地址分别用一个独立的wget进程进行下载。
+
+至于其他的参数，可参考wget的man手册页，命令为：
+man wget
+
+Post in LAMP | No Comments »
+
+DreamHost中shell使用指南
+01月 28th, 2008
+DreamHost中shell使用指南
+
+1. Basic Instructions基本操作命令
+通常来说，使用”$[Instructions] –help”可以获得以下各个命令[instructions]的帮助，包含其参数列表的定义。
+
+-ls 列出当前文件夹下所有内容
+$ls -o 列出当前文件夹中所有内容，含详细信息，但不列出group
+$ls -l 同上，含group信息
+$ls -a 列出当前文件夹中所有内容，包含以”.”开头的文件
+$ls -t 按更改时间排序
+$ls -v 按版本先后排序
+
+-cd [dir] 进入文件夹
+
+-pwd 显示当前路径
+
+-mkdir [dir] 新建文件夹
+
+-chmod 更改文件/文件夹权限
+$chmod [Mode] [dir]，其中Mode形如”755″或”777″等。
+$chmod [Mode] [file]
+$chmod -R [Mode] [dir]，递归形式，即将目标文件夹内所有文件均改变权限
+Mode还有另一种表达方式，”755″即为”-rwxr-xr-x”，不列举了。
+
+-rm [file] 删除文件/文件夹
+$rm -f [file] 强行删除，忽略不存在的文件，无提示
+$rm -r [file] 递归删除所有内容
+
+-cp 拷贝
+$cp [options] [source] [destination]
+其中[options]可以为-f（强行拷贝）或-r（递归拷贝）
+
+-mv 重命名或移动
+$mv [options] [source] [destination]
+[options]常用：-f(强行移动/重命名), -i(移动/重命名前尝试), -u(更新)
+例如
+$mv wwwroot/cgi-bin . 将/cgi-bin目录移动到当前目录下
+$mv cronfile.txt myfile.txt 将cronfile.txt重命名为myfile.txt
+
+2. wget下载工具
+wget是一种非交互式的网络文件下载工具，在linux下可以使用该工具快速地从网络上下载所需要的文件而不需要经由本地硬盘中转，而且速度极快。以下是一些使用方法：
+
+wget [参数列表] URL
+
+最简单的用法:
+
+$wget http://targetdomain.com/file.tar
+
+wget的常用参数：
+• -t [nuber of times]：尝试次数，当wget无法与服务器建立连接时，尝试连接多少次。比如”-t120″表示尝试120次。当这一项为”0″的时候，指定尝试无 穷多次直到连接成功为止，这个设置非常有用，当对方服务器突然关机或者网络突然中断的时候，可以在恢复正常后继续下载没有传完的文件；
+
+• -c：断点续传，这也是个非常有用的设置，特别当下载比较大的文件的时候，如果中途意外中断，那么连接恢复的时候会从上次没传完的地方接着传，而不是又从 头开始，使用这一项需要远程服务器也支持断点续传，一般来讲，基于UNIX/linux的Web/FTP服务器都支持断点续传；
+
+• -T [number of seconds]：超时时间，指定多长时间远程服务器没有响应就中断连接，开始下一次尝试。比如”-T120″表示如果120秒以后远程服务器没有发过来 数据，就重新尝试连接。如果网络速度比较快，这个时间可以设置的短些，相反，可以设置的长一些，一般最多不超过900，通常也不少于60，一般设置在 120左右比较合适；
+
+• -w [number of seconds]：在两次尝试之间等待多少秒，比如”-w 100″表示两次尝试之间等待100秒；
+
+• -nd：不下载目录结构，把从服务器所有指定目录下载的文件都堆到当前目录里；
+
+• -x：与”-nd”设置刚好相反，创建完整的目录结构，例如”wget -nd http://www.gnu.org/ “，实际的目录结构一级一级建下去，直到所有的文件都传完为止；
+
+• -nH：不创建以目标主机域名为目录名的目录，将目标主机的目录结构直接下到当前目录下；
+
+• -r：递归下载，在本机建立服务器端目录结构；
+
+• -l [depth]：下载远程服务器目录结构的深度，例如”-l 5″下载目录深度小于或者等于5以内的目录结构或者文件；
+
+• -m：做站点镜像时的选项，如果你想做一个站点的镜像，使用这个选项，它将自动设定其他合适的选项以便于站点镜像；
+
+• -np：只下载目标站点指定目录及其子目录的内容。这也是一个非常有用的选项，我们假设某个人的个人主页里面有一个指向这个站点其他人个人主页的连接，而 我们只想下载这个人的个人主页，如果不设置这个选项，甚至–有可能把整个站点给抓下来，这显然是我们通常不希望的；
+
+• –http-user=username
+• –http-passwd=password：如果Web服务器需要指定用户名和口令，用这两项来设定；
+
+• -O 将数据写入文件中。
+
+3. Crontab 定时执行任务
+
+在DreamHost系统下, 通过Shell可以建立自己的crontab. 具体使用如下:
+使用支持shell登录的终端(如fterm或putty), 地址栏输入 username@hostguide.cn:22即可以SSH方式登录至服务器.
+
+常用的crontab命令:
+crontab -l 显示所有现存cron job.
+
+crontab -r 删除当前cron jobs.
+
+crontab -e 编辑当前 “crontab file”. DH推荐使用nano
+
+注意你的crontab包含所有的cron jobs, 每个cron一行, 断行结尾. 一个正常的cron如下所示:
+
+45 2 * * * /home/user/script.pl
+第一个数字是每小时的第几分钟,
+第二个数字是每天的第几小时,
+第三个数字是每月的第几天,
+第四个数字是每年的第几月,
+第五个数字是每周的第几天.
+
+使用方式例如:
+32 * * * * : 表示每小时的第32分钟.
+12,42 * * * * : 表示每小时的第12及第42分钟两次
+*/15 */2 * * *: 表示0:00, 0:15, 0:30, 0:45, 2:00, 2:15, 2:30, …
+43 18 * * 7: 表示每个周日的6:43pm运行命令行.
+
+在DreamHost下使用nano编辑完文件后，使用ctrl+o保存，ctrl+x退出编辑。
+
+4. tar命令
+tar命令的使用方法如下：
+
+tar [参数列表] [文件名]
+
+参数列表：
+-c 生成新的备份，并同时覆盖旧的备份文件
+-x 从备份文件中解压缩
+-t 列出备份文件内的文件目录
+-v 显示所有被操作文件列表
+-f 在指定位置生成备份
+-u 将不存在于备份中的文件，或将已经被更改的文件加入该备份中。
+
+举例说明：
+tar cvf filename.tar /*制作备份*/
+tar cvf tarfile.tar ./filename /*将filename的文件备份到tarfile.tar里面*/
+tar tvf filename.tar /*列出tar文档的内容*/
+tar xvf filename.tar /*从tar文档中导出文件*/
+tar zxpvf filename.tar.gz /*从tar.gz文档中导出文件*/
+tar zxvf filename.tar.gz /*同上*/
+tar xvf tarfile.tar ./filename /*导出tar文件中的单个文件*/
+
+5. vi编辑器
+Linux下很易用的一种编辑器，只需要稍微知道几个指令即可应用。
+
+打开vi：
+$vi [filename]：打开或新建文件，并将光标置于第一行首
+$vi +n [filename] ：打开文件，并将光标置于第n行首
+$vi + [filename] ：打开文件，并将光标置于最后一行首
+$vi +/pattern [filename]：打开文件，并将光标置于第一个与pattern匹配的串处
+$vi -r [filename] ：在上次正用vi编辑时发生系统崩溃，恢复filename
+$vi [filename]….[filename] ：打开多个文件，依次编辑
+
+如果filename不存在，则自动生成一个名字filename的新文件。
+
+vi共有两种状态：命令状态/编辑状态
+
+编辑状态下：
+第一次按下insert键为”insert”模式，再按一下为”replace”模式，使用ESC返回命令状态；
+在此状态下键盘的PgUp/PgDn/Insert/Delete/Home/End/方向键，均处于正常功能状态。
+
+命令状态下：
+输入的字符串作为命令处理，使用”insert”键切换到编辑状态；
+以下是命令状态下的命令清单：
+
+移动光标类命令
+h ：光标左移一个字符
+l ：光标右移一个字符
+space：光标右移一个字符
+Backspace：光标左移一个字符
+k或Ctrl+p：光标上移一行
+j或Ctrl+n ：光标下移一行
+Enter ：光标下移一行
+w或W ：光标右移一个字至字首
+b或B ：光标左移一个字至字首
+e或E ：光标右移一个字j至字尾
+) ：光标移至句尾
+( ：光标移至句首
+}：光标移至段落开头
+{：光标移至段落结尾
+nG：光标移至第n行首
+n+：光标下移n行
+n-：光标上移n行
+n$：光标移至第n行尾
+H ：光标移至屏幕顶行
+M ：光标移至屏幕中间行
+L ：光标移至屏幕最后行
+0：（注意是数字零）光标移至当前行首
+$：光标移至当前行尾
+
+屏幕翻滚类命令
+Ctrl+u：向文件首翻半屏
+Ctrl+d：向文件尾翻半屏
+Ctrl+f：向文件尾翻一屏
+Ctrl＋b；向文件首翻一屏
+nz：将第n行滚至屏幕顶部，不指定n时将当前行滚至屏幕顶部。
+
+插入文本类命令
+i ：在光标前
+I ：在当前行首
+a：光标后
+A：在当前行尾
+o：在当前行之下新开一行
+O：在当前行之上新开一行
+r：替换当前字符
+R：替换当前字符及其后的字符，直至按ESC键
+s：从当前光标位置处开始，以输入的文本替代指定数目的字符
+S：删除指定数目的行，并以所输入文本代替之
+ncw或nCW：修改指定数目的字
+nCC：修改指定数目的行
+
+删除命令
+ndw或ndW：删除光标处开始及其后的n-1个字
+do：删至行首
+d$：删至行尾
+ndd：删除当前行及其后n-1行
+x或X：删除一个字符，x删除光标后的，而X删除光标前的
+Ctrl+u：删除输入方式下所输入的文本
+
+搜索及替换命令 :
+/pattern：从光标开始处向文件尾搜索pattern
+?pattern：从光标开始处向文件首搜索pattern
+n：在同一方向重复上一次搜索命令
+N：在反方向上重复上一次搜索命令
+：s/p1/p2/g：将当前行中所有p1均用p2替代
+：n1,n2s/p1/p2/g：将第n1至n2行中所有p1均用p2替代
+：g/p1/s//p2/g：将文件中所有p1均用p2替换
+
+选项设置
+all：列出所有选项设置情况
+term：设置终端类型
+ignorance：在搜索中忽略大小写
+list：显示制表位(Ctrl+I)和行尾标志（$)
+number：显示行号
+report：显示由面向行的命令修改过的数目
+terse：显示简短的警告信息
+warn：在转到别的文件时若没保存当前文件则显示NO write信息
+nomagic：允许在搜索模式中，使用前面不带“\”的特殊字符
+nowrapscan：禁止vi在搜索到达文件两端时，又从另一端开始
+mesg：允许vi显示其他用户用write写到自己终端上的信息
+
+最后行方式命令
+：n1,n2 co n3：将n1行到n2行之间的内容拷贝到第n3行下
+：n1,n2 m n3：将n1行到n2行之间的内容移至到第n3行下
+：n1,n2 d ：将n1行到n2行之间的内容删除
+：w ：保存当前文件
+：e filename：打开文件filename进行编辑
+：x：保存当前文件并退出
+：q：退出vi
+：q!：不保存文件并退出vi
+：!command：执行shell命令command
+：n1,n2 w!command：将文件中n1行至n2行的内容作为command的输入并执行之，若不指
+定n1，n2，则表示将整个文件内容作为command的输入
+：r!command：将命令command的输出结果放到当前行 。Adminis
+
+Post in LAMP | No Comments »
+
+mysql的一些乱七八糟的东西
+01月 27th, 2008
+mysql的一些乱七八糟的东西 使用MYSQL半年，自己经常用的东西- -
+
+Mysql –h192.168.0.110 –uks –p –P4444登录
+
+Mysqladmin –h192.168.0.110-uks –p reload重新加载用户表
+
+Mysqldump –R –h192.168.0.110 –uks –p test>c:/test.sql备份
+
+Mysql –h192.168.0.110 –uks –p test 
+Windows下net stop mysql关闭服务
+
+Net start mysql 开启服务
+
+Linux下 service mysql stop关闭
+
+Service mysql start 开启
+
+Service mysql restart重启服务
+
+Linux下开机自动启动mysql
+
+#>chkconfig –add mysql 开机启动
+
+Chkconfig –del mysql 关闭自动启动
+
+Chkconfig - -list 查看服务启动情况
+
+Mysql命令行下
+
+Explain select……..查看该SELECT语句信息
+
+Show variables查看系统变量
+
+Show status 常看当前服务器状态
+
+Show databases;
+
+Show tables;
+
+Show processlist
+
+Show warnings;(查看最近一个警告或错误)
+
+Set global xxxx=xxxx;
+
+Flush ……清楚mysql使用的部分内部缓存
+
+Information_schema.tables表信息
+
+Mysql动态语句5.1
+
+只支持create table,delete,do ,insert,replace,select set ,update语句
+
+Describe tablename查看该表结构
+
+Optimize table XXX 清理该表中已删除的链接（可以释放一些资源）
+
+Source c:abc.sql 在MYSQL命令行中执行脚本
+
+Select
+
+Create
+
+Insert
+
+Update
+
+Alter
+
+Grant
+
+revoke
+
+就不说了= =
+
+Mysql 数据库名最长 64位字符串
+
+表名….. 64位字符串
+
+字段名……. 64位字符串
+
+用户名…….. 16位字符串
+
+密码……… 貌似没限制
+
+Handler（很牛X的东东）
+
+Handler testt open as abc;
+
+Handler abc read id=(123456);
+
+Handler abc close;
+
+Benchmark(n,expr)执行N次EXPR并测算时间
+
+Post in LAMP | No Comments »
+
+MYSQL在命令行创建存储过程
+01月 27th, 2008
+MYSQL在命令行创建存储过程 如何在MYSQL命令行创建存储过程
+
+今天早上在百度知道碰到这个问题，我开始没看明白…….后来才知道提问人的意思是要在命令行下创建存储过程。很感谢这个问题，因为我也不会呵呵，我一直都用EMS创建这些东西…….
+
+我也尝试了一些方法，但是第一个分号mysql就以为语句结束了，就拿那个例子来说：
+
+CREATE PROCEDURE p7 (IN b INTEGER(12))
+
+begin
+
+declare a INTEGER(12);
+
+set a=5;
+
+INSERT INTO t VALUES (a);
+
+SELECT s1*a FROM t WHERE b<=s1;
+
+End
+
+这个存储过程，在命令行直接创建的话，在第三排你输入分号后就报错了……因为MYSQL以为这个语句结束了，那对于MYSQL而言
+
+CREATE PROCEDURE p7 (IN b INTEGER(12))
+
+begin
+
+declare a INTEGER(12);
+
+肯定是个错误语句。
+
+然后看了些东西，原来要加分隔符- -……….
+
+DELIMITER //
+
+CREATE PROCEDURE p7 (IN b INTEGER(12))
+
+begin
+
+declare a INTEGER(12);
+
+set a=5;
+
+INSERT INTO t VALUES (a);
+
+SELECT s1*a FROM t WHERE b<=s1;
+
+End
+
+//
+
+就OK了…………意思就是说在//……//之间的当成一个语句执行所以MYSQL接到的才是这个存储过程完整的创建语句。
+
+Post in LAMP | No Comments »
+
+mysql 基本命令
+01月 27th, 2008
+基础介绍:
+
+1.在linux下使用下列命令,请确认mysql的bin目录是否已经加入到PATH路径中,或者是已经进入到mysql安装路径下的bin目录
+查看PATH
+shell> echo $PATH
+或者
+shell> cd /usr/local/mysql/bin
+
+2.windows下,请运行cmd后,同样检查mysql的bin目录是否已加入到系统的PATH路径中,或直接进入mysql的安装目录
+
+下面所有操作都是确认你以检查mysql的bin目录已加入到系统的PATH路径中,或已经进入mysql的安装目录的bin目录下
+
+1]如何创建mysqld数据库的管理用户？
+
+数据库安装好后，我们应该为mysql数据库创建一个管理帐号。要把root用户设置为管理员，我们应该运行下面的命令；
+
+shell> mysqladmin -u root password 123456
+
+通过上面的命令，我们可以知道，mysql数据库的管理员是root，密码是123456。
+
+2]如何进入mysql数据库？以mysql数据库管理员root，密码为123456为例；
+
+shell> mysql -uroot -p123456
+
+输出上面的命令后，出现的是如下的提示；
+
+Welcome to the MySQL monitor. Commands end with ; or /g.
+Your MySQL connection id is 6 to server version: 3.23.58
+
+Type ‘help;’ or ‘/h’ for help. Type ‘/c’ to clear the buffer.
+
+mysql>
+
+注意：操作这些命令的时候，应该把mysqld服务器打开。这些新手兄弟早就知道了吧：)
+
+3]如何在数据库中操作命令呢，我想这是mysql手册都有的，我主要说几个要注意的地方。其实我也会不了几个命令。如果自己想学的弟兄，也不是什么难事；在windows中操作过mysql的，其实在这里也是一样的，mysql是跨平台的数据库，用法都是相同的。
+
+在mysql数据库中，每操作一个命令，都是;号结尾的，可能有的新手弟兄，忘记输入了；号结尾，结果退不出来。:):)
+
+1]查看mysql中都有哪些数据库？
+
+代码:
+mysql>
+show databases;
++———-+
+| Database |
++———-+
+| mysql |
+| test |
++———-+
+2 rows in set (0.00 sec) mysql>
+在mysql安装好，设置好管理员后，第一次进入系统，我们用show databases;命令查看数据库的列表，发现有两个数据库，mysql和test，这是系统自建的，是让大家练习用的。
+
+4]如何创建和删除一个数据库？
+
+比如我要创建一个名为linux的数据库，应该运行如下命令
+
+mysql> create database [数据库名];
+
+所以我们应该运行如下的命令，来创建名为linux的数据库
+
+mysql> create database linux;
+Query OK, 1 row affected (0.00 sec)
+
+是不是建好了呢？？肯定是建好了，因为都有OK了:)
+
+查看是不是有linux这个数据库了呢？
+
+代码:
+mysql> show databases;
++———-+
+| Database |
++———-+
+| linux |
+| mysql |
+| test |
++———-+
+3 rows in set (0.00 sec)
+
+那我们如何删除一个数据库呢？？
+mysql> drop database [数据库名];
+
+比如我们要把刚才创建的linux数据库删除，应该用下面的命令；
+mysql> drop database linux;
+Query OK, 0 rows affected (0.00 sec)
+
+是不是已经删除了呢？？
+
+代码:
+mysql> show databases;
++———-+
+| Database |
++———-+
+| mysql |
+| test |
++———-+
+2 rows in set (0.00 sec)
+
+5]如何操作一个数据库呢，这个问题就比较多了，建议还是看一下mysql的手册吧。里面的东西太多了。如果操作一个数据库，首先是要指定一个数据库为当前数据库，应该用use命令
+
+mysql>use [数据库];
+
+比如我想指定linux这个数据库为当前数据库，应该是
+
+mysql> use linux;
+Database changed
+
+6]如何备份数据库？？
+
+比如我们要备份mysql中已经存在的名为linux的数据库，要用到命令mysqldump
+
+命令格式如下：
+
+shell> mysqldump -uroot -p linux > /root/linux.sql
+Enter password:在这里输入数据库的密码
+
+通过上面的命令，我们要明白两件事，首先备份数据库是要以数据库管理员的身份备份；其次：备份目的地是/root，备份的文件名是linux.sql。其实备份的位置和文件名，根据自己的情况来定。文件名可以自己来取，路径也可以自己来安排；
+
+比如我想把linux的数据库备份到/home/beinan，数据库的文件名为linuxsir031130.sql，所以应该输入如下的命令。
+shell> mysqldump -uroot -p linux > /home/beinan/linuxsir031130.sql
+Enter password:在这里输入数据库管理员root的数据库密码
+
+这样我们到/home/beinan目录下就能发现mysql中名为linux的数据库的备份文件linuxsir031130.sql
+
+综上所述，我们学习时要学会变通。:):)
+
+5]如何把把备份的数据库导入到数据库中？
+
+首先我们还是要操作上面几个过程，比如添加数据库管理员(如果您没有添加过mysql数据库管理员的话)，创建数据库等。
+
+比如我们要把在/home/beinan这个目录中的linuxsir031130.sql这个备份，导入名为linux的数据库中，应该如下操作；
+
+shell> mysql -uroot -p linux < /home/beinan/linuxsir031130.sql
+Enter password:在这里输入密码
+
+如果机器好，数据库比较小，几分钟就好了。
+
+6]其它一些比较常用的mysql指令；
+
+查看状态
+mysql> show status;
+
+查看进程
+
+代码:
+mysql> show processlist;
++—-+——+———–+——+———+——+——-+——————+| Id | User | Host | db | Command | Time | State | Info |
++—-+——+———–+——+———+——+——-+——————+| 16 | root | localhost | NULL | Query | 0 | NULL | show processlist |
++—-+——+———–+——+———+——+——-+——————+
+1 row in set (0.00 sec)
+
+查看表，应该先指定一个数据库为当前数据库；比如是名为linux的数据库；
+
+mysql>use linux;
+mysql> show tables;
+Empty set (0.00 sec)
+
+7]对mysql数据库常用命令的一点补充；
+
+几个常用的mysql相关的管理命令
+
+mysql 命令：基本文本的，显示和使用的mysql数据库。前面已经简单的提过用法；比如登录等。
+
+mysqladmin 命令，用来创建和维护mysql数据库的命令，前面已经简单的提过；
+
+isamchk 是用来修复、检查和优化.ism后缀的数据库文件；
+
+mysqldump 是用于备份数据库，前面已经简单的说明过；
+
+myisamchk 用来修复.myi后缀的数据库文件；
+
+比如我们要检查名为linux的数据库.myi数据库表是否存在问题，应该用下面的命令；
+
+要把mysqld服务器停下来
+shell> ../share/mysql.server stop
+
+然后执行
+shell> myisamchk ../var/linux/*.MYI
+
+上面的命令的意思就是检查所有的.myi文件，数据库的目录在../var/linux/目录中
+
+如果有问题，应该用-r参数来修复
+shell> myisamchk -r ../var/linux/*.MYI
+
+6]mysqlshow 命令：显示用户选择的数据库和表
+shell> mysqlshow -uroot -p [数据库名]
+
+比如我要查看名为linux的数据库；应该是：
+
+shell> mysqlshow -uroot -p linux
+
+好了,到这里,你可能已经知道命令行下的所有基本操作了~
+
+ps:补充一个。。
+
+更改ROOT帐号名。
+
+update set user=”新名字” where user=”旧名字”;
+
+自己补充：
+在windows中的关闭mysql命令 net stop mysql ；启动是net start mysql
+OPTIMIZE TABLE “;优化表
+
+Post in LAMP | No Comments »
+
+ib_logfile0和ib_logfile1,为INNODB数据LOG文件
+01月 27th, 2008
+ASK:我的系统是windows2003,最近装了MYSQL5.0后发现C盘容量剧减,后来仔细检查了一下,发现ib_logfile0和ib_logfile1竟然用了600多M,现在C盘8G的空间就剩余200M了,请问我要怎样转移ib_logfile0和ib_logfile1文件到D盘呢?
+
+DA: ib_logfile0和ib_logfile1,为INNODB数据LOG文件,先停下数据库.
+将这三个文件拷到它处
+修改MY.INI配置文件, 参数改为新目录
+—————————
+innodb_log_group_home_dir
+
+The directory path to the InnoDB log files. It must have the same value as innodb_log_arch_dir. If you do not specify any InnoDB log parameters, the default is to create two 5MB files names ib_logfile0 and ib_logfile1 in the MySQL data directory.
+————
+再启动
+
+不过有个问题,LOG文件是固定不变,用来存储未提交的数据,一般设为几十兆就可以了,你的是否设置有问题.....................
+
+
+
+
