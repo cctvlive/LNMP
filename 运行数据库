@@ -31,7 +31,7 @@ mysql -uroot -p 数据库名<文件名
 
 mysql -uroot -p ; 进入mysql
 
-mysql>show database; 查询数据库
+mysql>show databases; 查询数据库
 
 mysql> CREATE DATABASE abc; 创建数据库abc
 
