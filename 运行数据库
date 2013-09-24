@@ -56,4 +56,48 @@ mysql> drop database abc; 删除数据库abc
                                                                                        2013/9/6
 
 
+GBK: create database test2 DEFAULT CHARACTER SET gbk COLLATE gbk_chinese_ci;
+
+UTF8: CREATE DATABASE `test2` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+
+注意：如果不是通过my.ini配置文件设置的内容，只在当前状态下有效，当重启数据库服务后失效。所以如果想要不出现乱码只有修改my.ini文件，数据库编码可以在创建数据库时候指定UTF8，如下：
+|character_set_client      | utf8                                  |
+| character_set_connection | utf8                                  |
+| character_set_database   | utf8                                  |
+| character_set_filesystem | binary                                |
+| character_set_results    | utf8                                  |
+| character_set_server     | latin1                                |
+| character_set_system     | utf8           
+
+注意该配置| character_set_server     | latin1 无法设置成UTF8
+交互时候仍然会出现乱码。
+
+只有当修改my.ini中设置UTF8，才会全部修改成UTF8
+
+-------------------------
+mysql设置编码命令 
+
+SET character_set_client = utf8; 
+SET character_set_connection = utf8; 
+SET character_set_database = utf8; 
+SET character_set_results = utf8;/*这里要注意很有用*/ 
+SET character_set_server = utf8; 
+
+SET collation_connection = utf8_bin; 
+SET collation_database = utf8_bin; 
+SET collation_server = utf8_bin; 
+
+my.ini中配置默认编码 
+default-character-set=utf8 
+
+连接数据库设置编码 
+jdbc:mysql://192.168.0.5:3306/test?characterEncoding=utf8 
+
+/*****************************************java与mysq编码对应****************************************/ 
+java中的常用编码UTF-8;GBK;GB2312;ISO-8859-1; 
+对应mysql数据库中的编码utf8;gbk;gb2312;latin1
+
+---------------------------
+数据库连接串中指定字符集URL=jdbc:mysql://yourIP/college?user=root&password=yourPassword&useUnicode=true&characterEncoding=gbk
+
 
