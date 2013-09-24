@@ -33,11 +33,17 @@ mysql -uroot -p ; 进入mysql
 
 mysql>show databases; 查询数据库
 
+ 2、导入数据库sql的时候，请确保sql文件为utf-8编码
+     进入mysql命令行后输入    set names utf8;
+ 
+    
+
 mysql> CREATE DATABASE abc; 创建数据库abc
 
-
+    再进入数据库        use test;
 mysql>use database; 选择数据库进行操作
 
+ 在导入sql脚本        source test.sql;
 mysql> source  /home/www/abc.sql; 向数据库abc导入sql数据文件
 
 
