@@ -1,0 +1,61 @@
+linux下lrzsz安装过程,SecureCRT上传下载文件工具
+1、从下面的地址下载 lrzsz-1.12.20.tar.gz
+http://down1.chinaunix.net/distfiles/lrzsz-0.12.20.tar.gz
+2、查看里面的INSTALL文档了解安装参数说明和细节
+3、解压文件
+tar zxvf lrzsz-1.12.20.tar.gz
+4、进入目录
+cd lrzsz-1.12.20
+5、./configure --prefix=/usr/local/lrzsz
+6、make
+7、make install
+8、建立软链接
+#cd /usr/bin
+#ln -s /usr/local/lrzsz/bin/lrz rz
+#ln -s /usr/local/lrzsz/bin/lsz sz
+9、测试
+运行 rz 弹出SecureCRT上传窗口
+
+--------------------------------------------------------------------------------
+2种  yum 安装
+由上述现象可知，很可能没有安装相应的软件包：sz 、rz  命令所需要的软件包是lrzsz 。
+[root@server ~]# sz /etc/samba/smb.conf
+-bash: sz: command not found
+下面检查软件包是否安装？
+[root@server]# rpm -qa |grip sz
+-bash: grip: command not found
+安装软件包（使用yum自动安装：）
+[root@server]# yum -y install lrzsz
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+* base: centos.ustc.edu.cn
+* extras: centos.ustc.edu.cn
+* updates: centos.ustc.edu.cn
+Setting up Install Process
+Resolving Dependencies
+--> Running transaction check
+---> Package lrzsz.x86_64 0:0.12.20-27.1.el6 will be installed
+--> Finished Dependency Resolution
+Dependencies Resolved
+=================================================================================================
+Package          Arch         Version                 Repository                  Size
+=================================================================================================
+Installing:
+lrzsz     x86_64       0.12.20-27.1.el6               base                        71 k
+Transaction Summary
+=================================================================================================
+Install       1 Package(s)
+Total download size: 71 k
+Installed size: 159 k
+Downloading Packages:
+lrzsz-0.12.20-27.1.el6.x86_64.rpm                                             |  71 kB     00:00                                                                
+Running rpm_check_debug
+Running Transaction Test
+Transaction Test Succeeded
+Running Transaction
+ Installing:lrzsz-0.12.20-27.1.el6.x86_64                                    1/1                                                        
+ Verifying:lrzsz-0.12.20-27.1.el6.x86_64                                     1/1                                                                        
+Installed:
+ lrzsz.x86_64 0:0.12.20-27.1.el6                                                                                                                          
+Complete!
+配置上传下载目录：
