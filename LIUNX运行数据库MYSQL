@@ -1,3 +1,5 @@
+[root@localhost tianlang]# mysql -h183.156.17.103 -u tianlang -p  本地登录
+
 授权不要自己去改表，那样不好，应该使用GRANT命令:
 
 GRANT 权限 ON 库名.表名 TO 用户名@主机名 IDENTIFIED BY "密码"
