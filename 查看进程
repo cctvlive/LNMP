@@ -1,0 +1,25 @@
+Linux系统查看进程信息相关命令：
+
+ps –aux
+
+查看进程的命令有很多，我只是列出了我最常用的几个。
+
+netstat –tln //查看服务监听端口
+
+netstat      //查看进程号
+
+ps –aux     //查看进程号
+
+ps –aux | more //全部查看
+
+ps –ef | grep mysql //查看mysql的进程
+
+kill -9 3306 //强制杀掉进程号3306
+
+防火墙的设置
+
+设置防火墙： setup
+
+查看防火墙设置： iptables –L
+
+关闭防火墙:     iptables -F
